@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'nokogiri'
+gem 'nokogiri', '~> 1.6.8.rc3'
 gem 'mechanize'
 gem 'pry'
 if RUBY_PLATFORM =~ /darwin/
