@@ -35,10 +35,16 @@ agent.text_field(id: 'password').set cnf.fetch "password"
 agent.button(name: 'Login').click
 
 agent.links(class: 'actionLink', text: 'download').each do |link|
-  if work_hours?
-    hold_process
-  else
-    link.click
-    sleep 60 * 12
+  begin
+    if work_hours?
+      hold_process
+    else
+      link.click
+      sleep 60 * 12
+    end
+  rescue => e
+    puts e
+    sleep 10
+    retry
   end
 end
