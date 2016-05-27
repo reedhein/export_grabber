@@ -5,6 +5,18 @@ require 'pry-byebug'
 require 'open-uri'
 require 'selenium-webdriver'
 require 'watir'
+require 'active_suport/time'
+
+ActiveSupport::TimeZone[-8]
+
+def work_hours?
+  17 < Time.now.hour && Time.now.hour > 9
+end
+
+def hold_process
+  puts 'waiting for work to be over'
+  sleep 60
+end
 
 cnf = YAML::load(File.open('secrets.yml'))
 # login_page    = 'https://login.salesforce.com/'
@@ -23,6 +35,10 @@ agent.text_field(id: 'password').set cnf.fetch "password"
 agent.button(name: 'Login').click
 
 agent.links(class: 'actionLink', text: 'download').each do |link|
-  link.click
-  sleep 60 * 12
+  if work_hours?
+    hold_process
+  else
+    link.click
+    sleep 60 * 12
+  end
 end
