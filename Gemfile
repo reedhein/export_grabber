@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 gem 'nokogiri'
 gem 'mechanize'
 gem 'pry'
-platforms :darwin do
-  gem 'pry-byebug'
+if RUBY_PLATFORM =~ /darwin/
+  gem 'pry-byebug', require: false
 end
 gem 'watir'
 gem 'activesupport'
